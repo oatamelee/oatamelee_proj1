@@ -1,0 +1,69 @@
+import random
+
+# Game constants
+CHEMO_ENERGY = 10
+FOOD_WEB_ENERGY = 5
+VENT_TEMPERATURE = 50
+VOLCANIC_ACTIVITY = 20
+
+# Player class
+class Player:
+    def __init__(self):
+        self.energy = CHEMO_ENERGY
+        self.food_web_energy = 0
+        self.location = "Hydrothermal Vent"
+
+    def move(self, location):
+        self.location = location
+        print(f"You moved to {location}.")
+
+    def eat(self):
+        if self.location == "Hydrothermal Vent":
+            self.food_web_energy += FOOD_WEB_ENERGY
+            print("You ate some delicious chemosynthetic compounds!")
+        else:
+            print("There's no food here.")
+
+    def chemosynthesize(self):
+        if self.location == "Hydrothermal Vent":
+            self.energy += CHEMO_ENERGY
+            print("You absorbed some chemical energy from the vent!")
+        else:
+            print("There's no chemical energy here.")
+
+# Game loop
+player = Player()
+while True:
+    print("\nYou are a chemosynthetic microorganism in the ChemoOcean.")
+    print(f"Your current energy: {player.energy}")
+    print(f"Your current food web energy: {player.food_web_energy}")
+    print("What do you want to do?")
+    print("1. Move to a new location")
+    print("2. Eat some food")
+    print("3. Chemosynthesize some energy")
+    print("4. Check your surroundings")
+
+    choice = input("> ")
+
+    if choice == "1":
+        locations = ["Hydrothermal Vent", "Volcanic Region", "Mineral-Rich Seafloor"]
+        player.move(random.choice(locations))
+    elif choice == "2":
+        player.eat()
+    elif choice == "3":
+        player.chemosynthesize()
+    elif choice == "4":
+        if player.location == "Hydrothermal Vent":
+            print("You see a hot, chemical-rich environment.")
+        elif player.location == "Volcanic Region":
+            print("You see a region of intense volcanic activity.")
+        elif player.location == "Mineral-Rich Seafloor":
+            print("You see a seafloor rich in minerals and nutrients.")
+    else:
+        print("Invalid choice. Try again!")
+    if player.energy <= 0:
+        print("You ran out of energy! Game over.")
+        break
+    elif player.food_web_energy >= 100:
+        print("You reached the top of the food web! Congratulations, you won!")
+        break
